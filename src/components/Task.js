@@ -1,12 +1,6 @@
 import styled from "styled-components";
 
-export default function Task({
-  name,
-  completed,
-  archived,
-  setComplete,
-  setArchive,
-}) {
+export default function Task({ name, completed, setComplete, deleteTask }) {
   return (
     <TaskContainer
       style={completed ? { background: "red" } : { background: "green" }}
@@ -19,7 +13,7 @@ export default function Task({
       >
         {completed ? "complete" : "uncomplete"}
       </Button>
-      <Button onClick={setArchive}>{completed ? "delete" : "archived"}</Button>
+      <Button onClick={deleteTask}>{completed ? "delete" : "archived"}</Button>
     </TaskContainer>
   );
 }

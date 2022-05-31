@@ -38,7 +38,7 @@ function App() {
     setTasks(completedTasks);
   }
 
-  function setArchive(id) {
+  function deleteTask(id) {
     const archivedTasks = tasks.filter((task) => task.id !== id);
     setTasks(archivedTasks);
   }
@@ -64,7 +64,7 @@ function App() {
               completed={task.completed}
               setComplete={(newValue) => setComplete(task.id, newValue)}
               archived={task.archived}
-              setArchive={() => setArchive(task.id)}
+              setArchive={() => deleteTask(task.id)}
             />
           );
         })}
