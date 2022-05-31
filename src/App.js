@@ -11,7 +11,7 @@ function App() {
       id: nanoid(),
       name: "Wash dishes",
       completed: true,
-      archived: false,
+      archived: true,
     },
     {
       id: nanoid(),
@@ -27,10 +27,10 @@ function App() {
     },
   ]);
 
-  function setComplete(id, newValue) {
+  function setComplete(id) {
     const completedTasks = tasks.map((task) => {
       if (task.id === id) {
-        return { ...task, completed: newValue };
+        return { ...task, completed: !task.completed };
       } else {
         return task;
       }
@@ -38,9 +38,20 @@ function App() {
     setTasks(completedTasks);
   }
 
-  function deleteTask(id) {
-    const archivedTasks = tasks.filter((task) => task.id !== id);
+  function archiveTask(id) {
+    const archivedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, archived: !task.archived };
+      } else {
+        return task;
+      }
+    });
     setTasks(archivedTasks);
+  }
+
+  function deleteTask(id) {
+    const deletedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(deletedTasks);
   }
 
   function addTask(name) {
@@ -56,18 +67,21 @@ function App() {
       <Header />
       <Form addTask={addTask} />
       <section>
-        {tasks.map((task) => {
-          return (
-            <Task
-              key={task.id}
-              name={task.name}
-              completed={task.completed}
-              setComplete={(newValue) => setComplete(task.id, newValue)}
-              archived={task.archived}
-              setArchive={() => deleteTask(task.id)}
-            />
-          );
-        })}
+        {tasks
+          .filter((task) => !task.archived)
+          .map((task) => {
+            return (
+              <Task
+                key={task.id}
+                name={task.name}
+                completed={task.completed}
+                setComplete={() => setComplete(task.id)}
+                archived={task.archived}
+                deleteTask={() => deleteTask(task.id)}
+                archiveTask={() => archiveTask(task.id)}
+              />
+            );
+          })}
       </section>
     </AppContainer>
   );
