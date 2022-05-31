@@ -6,9 +6,7 @@ import Form from "./components/Form.js";
 import Task from "./components/Task.js";
 
 function App() {
-  const [tasks, setTasks] = useState();
-
-  const allTasks = [
+  const [tasks, setTasks] = useState([
     {
       id: nanoid(),
       name: "Wash dishes",
@@ -27,23 +25,46 @@ function App() {
       completed: false,
       archived: false,
     },
-  ];
+  ]);
 
-  function switchComplete(id, newValue) {}
+  function setComplete(id, newValue) {
+    const completedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, completed: newValue };
+      } else {
+        return task;
+      }
+    });
+    setTasks(completedTasks);
+  }
+
+  function setArchive(id) {
+    const archivedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(archivedTasks);
+  }
+
+  function addTask(name) {
+    const newTasks = [
+      ...tasks,
+      { id: nanoid(), name: name, completed: false, archived: false },
+    ];
+    setTasks(newTasks);
+  }
 
   return (
     <AppContainer>
       <Header />
-      <Form />
+      <Form addTask={addTask} />
       <section>
-        {allTasks.map((task) => {
+        {tasks.map((task) => {
           return (
             <Task
               key={task.id}
               name={task.name}
               completed={task.completed}
-              switchComplete={(newValue) => switchComplete(task.id, newValue)}
+              setComplete={(newValue) => setComplete(task.id, newValue)}
               archived={task.archived}
+              setArchive={() => setArchive(task.id)}
             />
           );
         })}

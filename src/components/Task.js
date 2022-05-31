@@ -1,11 +1,25 @@
 import styled from "styled-components";
 
-export default function Task({ name, completed, archived }) {
+export default function Task({
+  name,
+  completed,
+  archived,
+  setComplete,
+  setArchive,
+}) {
   return (
-    <TaskContainer completed={completed}>
+    <TaskContainer
+      style={completed ? { background: "red" } : { background: "green" }}
+    >
       <p>{name}</p>
-      <Button>{completed ? "complete" : "uncomplete"}</Button>
-      <Button>{archived ? "delete" : "archived"}</Button>
+      <Button
+        onClick={() => {
+          setComplete(!completed);
+        }}
+      >
+        {completed ? "complete" : "uncomplete"}
+      </Button>
+      <Button onClick={setArchive}>{completed ? "delete" : "archived"}</Button>
     </TaskContainer>
   );
 }
@@ -19,7 +33,6 @@ const TaskContainer = styled.section`
   align-items: center;
   margin: 2em 0 2em 0;
   gap: 2em;
-  background-color: ${(props) => (props.completed ? "green" : "red")};
 `;
 
 const Button = styled.button`
