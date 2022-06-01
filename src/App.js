@@ -34,6 +34,7 @@ function useLocalStorage(key, defaultState) {
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("current-tasks", []);
+  const [random, setRandom] = useState(0);
 
   function setComplete(id) {
     const completedTasks = tasks.map((task) => {
@@ -70,10 +71,9 @@ function App() {
     setTasks(newTasks);
   }
 
-  function randomTasks(tasks) {
-    const randomIndex = Math.floor(Math.random() * tasks.length);
-    const randomTask = tasks.filter((task, index) => index === randomIndex);
-    setTasks(randomTask);
+  function randomTasks() {
+    const randomTask = Math.floor(Math.random() * tasks.length);
+    setRandom(randomTask);
   }
 
   return (
@@ -129,17 +129,23 @@ function App() {
           path="/random"
           element={
             <>
-              <button onClick={randomTasks}>Shuffle</button>
+              <button
+                onClick={() => {
+                  randomTasks();
+                }}
+              >
+                Shuffle
+              </button>
               <section>
-                {tasks.map((task) => {
-                  return (
-                    <TaskBlank
-                      key={task.id}
-                      name={task.name}
-                      completed={task.completed}
-                    />
-                  );
-                })}
+                <Task
+                  key={tasks[random].id}
+                  name={tasks[random].name}
+                  completed={tasks[random].completed}
+                  setComplete={() => setComplete(tasks[random].id)}
+                  archived={tasks[random].archived}
+                  deleteTask={() => deleteTask(tasks[random].id)}
+                  archiveTask={() => archiveTask(tasks[random].id)}
+                />
               </section>
             </>
           }
