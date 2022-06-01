@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import Header from "./components/Header.js";
@@ -6,26 +6,18 @@ import Form from "./components/Form.js";
 import Task from "./components/Task.js";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: nanoid(),
-      name: "Wash dishes",
-      completed: true,
-      archived: true,
-    },
-    {
-      id: nanoid(),
-      name: "Wash dishes",
-      completed: false,
-      archived: false,
-    },
-    {
-      id: nanoid(),
-      name: "Wash dishes",
-      completed: false,
-      archived: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState(() => {
+    const currentTasks = localStorage.getItem("current-tasks");
+    if (currentTasks) {
+      return JSON.parse(currentTasks);
+    } else {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("current-tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function setComplete(id) {
     const completedTasks = tasks.map((task) => {
