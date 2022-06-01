@@ -17,11 +17,9 @@ function App() {
     }
   });
 
-  /* useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("current-tasks", JSON.stringify(tasks));
-  }, [tasks]);*/
-
-  console.log(tasks);
+  }, [tasks]);
 
   function setComplete(id) {
     const completedTasks = tasks.map((task) => {
@@ -32,7 +30,6 @@ function App() {
       }
     });
     setTasks(completedTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(completedTasks));
   }
 
   function archiveTask(id) {
@@ -44,13 +41,11 @@ function App() {
       }
     });
     setTasks(archivedTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(archivedTasks));
   }
 
   function deleteTask(id) {
     const deletedTasks = tasks.filter((task) => task.id !== id);
     setTasks(deletedTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(deletedTasks));
   }
 
   function addTask(name) {
@@ -59,7 +54,6 @@ function App() {
       { id: nanoid(), name: name, completed: false, archived: false },
     ];
     setTasks(newTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(newTasks));
   }
 
   return (
