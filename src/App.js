@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import Header from "./components/Header.js";
 import Form from "./components/Form.js";
 import Task from "./components/Task.js";
+import TaskBlank from "./components/TaskBlank.js";
 import Footer from "./components/Footer.js";
 import { Routes, Route } from "react-router-dom";
+import useLocalStorage from "./hooks/useLocalStorage.js";
 
 function App() {
-  const [tasks, setTasks] = useState(() => {
-    const currentTasks = localStorage.getItem("current-tasks");
-    if (currentTasks) {
-      return JSON.parse(currentTasks);
-    } else {
-      return [];
-    }
-  });
-
-  /* useEffect(() => {
-    localStorage.setItem("current-tasks", JSON.stringify(tasks));
-  }, [tasks]);*/
-
-  console.log(tasks);
+  const [tasks, setTasks] = useLocalStorage("current-tasks", []);
+  const [random, setRandom] = useState(0);
 
   function setComplete(id) {
     const completedTasks = tasks.map((task) => {
@@ -32,7 +22,6 @@ function App() {
       }
     });
     setTasks(completedTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(completedTasks));
   }
 
   function archiveTask(id) {
@@ -44,13 +33,11 @@ function App() {
       }
     });
     setTasks(archivedTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(archivedTasks));
   }
 
   function deleteTask(id) {
     const deletedTasks = tasks.filter((task) => task.id !== id);
     setTasks(deletedTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(deletedTasks));
   }
 
   function addTask(name) {
@@ -59,7 +46,11 @@ function App() {
       { id: nanoid(), name: name, completed: false, archived: false },
     ];
     setTasks(newTasks);
-    localStorage.setItem("current-tasks", JSON.stringify(newTasks));
+  }
+
+  function randomTasks() {
+    const randomTask = Math.floor(Math.random() * tasks.length);
+    setRandom(randomTask);
   }
 
   return (
@@ -100,17 +91,38 @@ function App() {
                   .filter((task) => task.archived)
                   .map((task) => {
                     return (
-                      <Task
+                      <TaskBlank
                         key={task.id}
                         name={task.name}
                         completed={task.completed}
-                        setComplete={() => setComplete(task.id)}
-                        archived={task.archived}
-                        deleteTask={() => deleteTask(task.id)}
-                        archiveTask={() => archiveTask(task.id)}
                       />
                     );
                   })}
+              </section>
+            </>
+          }
+        />
+        <Route
+          path="/random"
+          element={
+            <>
+              <button
+                onClick={() => {
+                  randomTasks();
+                }}
+              >
+                Shuffle
+              </button>
+              <section>
+                <Task
+                  key={tasks[random].id}
+                  name={tasks[random].name}
+                  completed={tasks[random].completed}
+                  setComplete={() => setComplete(tasks[random].id)}
+                  archived={tasks[random].archived}
+                  deleteTask={() => deleteTask(tasks[random].id)}
+                  archiveTask={() => archiveTask(tasks[random].id)}
+                />
               </section>
             </>
           }

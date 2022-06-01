@@ -6,6 +6,7 @@ export default function Footer() {
     <FooterUl>
       <FooterLi to="/">Home</FooterLi>
       <FooterLi to="/archived">Archived</FooterLi>
+      <FooterLi to="/random">Random</FooterLi>
     </FooterUl>
   );
 }
