@@ -4,22 +4,36 @@ import { nanoid } from "nanoid";
 import Header from "./components/Header.js";
 import Form from "./components/Form.js";
 import Task from "./components/Task.js";
+import TaskBlank from "./components/TaskBlank.js";
 import Footer from "./components/Footer.js";
 import { Routes, Route } from "react-router-dom";
 
-function App() {
-  const [tasks, setTasks] = useState(() => {
-    const currentTasks = localStorage.getItem("current-tasks");
-    if (currentTasks) {
-      return JSON.parse(currentTasks);
-    } else {
-      return [];
+function useLocalStorage(key, defaultState) {
+  const [state, setState] = useState(() => {
+    try {
+      const persistedData = localStorage.getItem(key);
+      if (persistedData) {
+        return JSON.parse(persistedData);
+      }
+      return defaultState;
+    } catch (error) {
+      console.warn("Reading from local storage failed", error);
+      return defaultState;
     }
   });
-
   useEffect(() => {
-    localStorage.setItem("current-tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    try {
+      localStorage.setItem(key, JSON.stringify(state));
+    } catch (error) {
+      console.warn("Writing to local storage failed", error);
+    }
+  }, [state]);
+
+  return [state, setState];
+}
+
+function App() {
+  const [tasks, setTasks] = useLocalStorage("current-tasks", []);
 
   function setComplete(id) {
     const completedTasks = tasks.map((task) => {
@@ -54,6 +68,12 @@ function App() {
       { id: nanoid(), name: name, completed: false, archived: false },
     ];
     setTasks(newTasks);
+  }
+
+  function randomTasks(tasks) {
+    const randomIndex = Math.floor(Math.random() * tasks.length);
+    const randomTask = tasks.filter((task, index) => index === randomIndex);
+    setTasks(randomTask);
   }
 
   return (
@@ -94,17 +114,32 @@ function App() {
                   .filter((task) => task.archived)
                   .map((task) => {
                     return (
-                      <Task
+                      <TaskBlank
                         key={task.id}
                         name={task.name}
                         completed={task.completed}
-                        setComplete={() => setComplete(task.id)}
-                        archived={task.archived}
-                        deleteTask={() => deleteTask(task.id)}
-                        archiveTask={() => archiveTask(task.id)}
                       />
                     );
                   })}
+              </section>
+            </>
+          }
+        />
+        <Route
+          path="/random"
+          element={
+            <>
+              <button onClick={randomTasks}>Shuffle</button>
+              <section>
+                {tasks.map((task) => {
+                  return (
+                    <TaskBlank
+                      key={task.id}
+                      name={task.name}
+                      completed={task.completed}
+                    />
+                  );
+                })}
               </section>
             </>
           }

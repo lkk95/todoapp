@@ -10,9 +10,11 @@ export default function Task({
   return (
     <TaskContainer completed={completed}>
       <p>{name}</p>
-      <Button onClick={setComplete}>
-        {completed ? "complete" : "uncomplete"}
-      </Button>
+      {completed ? (
+        <Button onClick={setComplete}>complete</Button>
+      ) : (
+        <Button onClick={setComplete}>uncomplete</Button>
+      )}
       {completed ? (
         <Button onClick={deleteTask}>delete</Button>
       ) : (
