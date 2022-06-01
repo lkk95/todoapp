@@ -13,9 +13,11 @@ export default function Task({
       <Button onClick={setComplete}>
         {completed ? "complete" : "uncomplete"}
       </Button>
-      <Button onClick={completed ? archiveTask : deleteTask}>
-        {completed ? "delete" : "archive"}
-      </Button>
+      {completed ? (
+        <Button onClick={deleteTask}>delete</Button>
+      ) : (
+        <Button onClick={archiveTask}>archive</Button>
+      )}
     </TaskContainer>
   );
 }

@@ -4,6 +4,8 @@ import { nanoid } from "nanoid";
 import Header from "./components/Header.js";
 import Form from "./components/Form.js";
 import Task from "./components/Task.js";
+import Footer from "./components/Footer.js";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -15,9 +17,11 @@ function App() {
     }
   });
 
-  useEffect(() => {
+  /* useEffect(() => {
     localStorage.setItem("current-tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  }, [tasks]);*/
+
+  console.log(tasks);
 
   function setComplete(id) {
     const completedTasks = tasks.map((task) => {
@@ -28,6 +32,7 @@ function App() {
       }
     });
     setTasks(completedTasks);
+    localStorage.setItem("current-tasks", JSON.stringify(completedTasks));
   }
 
   function archiveTask(id) {
@@ -39,11 +44,13 @@ function App() {
       }
     });
     setTasks(archivedTasks);
+    localStorage.setItem("current-tasks", JSON.stringify(archivedTasks));
   }
 
   function deleteTask(id) {
     const deletedTasks = tasks.filter((task) => task.id !== id);
     setTasks(deletedTasks);
+    localStorage.setItem("current-tasks", JSON.stringify(deletedTasks));
   }
 
   function addTask(name) {
@@ -52,29 +59,64 @@ function App() {
       { id: nanoid(), name: name, completed: false, archived: false },
     ];
     setTasks(newTasks);
+    localStorage.setItem("current-tasks", JSON.stringify(newTasks));
   }
 
   return (
     <AppContainer>
       <Header />
-      <Form addTask={addTask} />
-      <section>
-        {tasks
-          .filter((task) => !task.archived)
-          .map((task) => {
-            return (
-              <Task
-                key={task.id}
-                name={task.name}
-                completed={task.completed}
-                setComplete={() => setComplete(task.id)}
-                archived={task.archived}
-                deleteTask={() => deleteTask(task.id)}
-                archiveTask={() => archiveTask(task.id)}
-              />
-            );
-          })}
-      </section>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Form addTask={addTask} />
+              <section>
+                {tasks
+                  .filter((task) => !task.archived)
+                  .map((task) => {
+                    return (
+                      <Task
+                        key={task.id}
+                        name={task.name}
+                        completed={task.completed}
+                        setComplete={() => setComplete(task.id)}
+                        archived={task.archived}
+                        deleteTask={() => deleteTask(task.id)}
+                        archiveTask={() => archiveTask(task.id)}
+                      />
+                    );
+                  })}
+              </section>
+            </>
+          }
+        />
+        <Route
+          path="/archived"
+          element={
+            <>
+              <section>
+                {tasks
+                  .filter((task) => task.archived)
+                  .map((task) => {
+                    return (
+                      <Task
+                        key={task.id}
+                        name={task.name}
+                        completed={task.completed}
+                        setComplete={() => setComplete(task.id)}
+                        archived={task.archived}
+                        deleteTask={() => deleteTask(task.id)}
+                        archiveTask={() => archiveTask(task.id)}
+                      />
+                    );
+                  })}
+              </section>
+            </>
+          }
+        />
+      </Routes>
+      <Footer />
     </AppContainer>
   );
 }
