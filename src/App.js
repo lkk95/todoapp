@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import Header from "./components/Header.js";
@@ -7,30 +7,7 @@ import Task from "./components/Task.js";
 import TaskBlank from "./components/TaskBlank.js";
 import Footer from "./components/Footer.js";
 import { Routes, Route } from "react-router-dom";
-
-function useLocalStorage(key, defaultState) {
-  const [state, setState] = useState(() => {
-    try {
-      const persistedData = localStorage.getItem(key);
-      if (persistedData) {
-        return JSON.parse(persistedData);
-      }
-      return defaultState;
-    } catch (error) {
-      console.warn("Reading from local storage failed", error);
-      return defaultState;
-    }
-  });
-  useEffect(() => {
-    try {
-      localStorage.setItem(key, JSON.stringify(state));
-    } catch (error) {
-      console.warn("Writing to local storage failed", error);
-    }
-  }, [state]);
-
-  return [state, setState];
-}
+import useLocalStorage from "./hooks/useLocalStorage.js";
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("current-tasks", []);
