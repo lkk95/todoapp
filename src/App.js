@@ -13,6 +13,8 @@ function App() {
   const [tasks, setTasks] = useLocalStorage("current-tasks", []);
   const [random, setRandom] = useState(0);
 
+  console.log(random);
+
   function setComplete(id) {
     const completedTasks = tasks.map((task) => {
       if (task.id === id) {
@@ -114,15 +116,19 @@ function App() {
                 Shuffle
               </button>
               <section>
-                <Task
-                  key={tasks[random].id}
-                  name={tasks[random].name}
-                  completed={tasks[random].completed}
-                  setComplete={() => setComplete(tasks[random].id)}
-                  archived={tasks[random].archived}
-                  deleteTask={() => deleteTask(tasks[random].id)}
-                  archiveTask={() => archiveTask(tasks[random].id)}
-                />
+                {tasks ? (
+                  <Task
+                    key={tasks[random].id}
+                    name={tasks[random].name}
+                    completed={tasks[random].completed}
+                    setComplete={() => setComplete(tasks[random].id)}
+                    archived={tasks[random].archived}
+                    deleteTask={() => deleteTask(tasks[random].id)}
+                    archiveTask={() => archiveTask(tasks[random].id)}
+                  />
+                ) : (
+                  "Please shuffle a random task!"
+                )}
               </section>
             </>
           }
@@ -135,10 +141,11 @@ function App() {
 
 export default App;
 
-const AppContainer = styled.div`
+const AppContainer = styled.main`
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 10em 0 10em 0;
 `;
