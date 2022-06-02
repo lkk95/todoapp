@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
@@ -8,6 +9,7 @@ import TaskBlank from "./components/TaskBlank.js";
 import Footer from "./components/Footer.js";
 import { Routes, Route } from "react-router-dom";
 import useLocalStorage from "./hooks/useLocalStorage.js";
+import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("current-tasks", []);
@@ -45,14 +47,23 @@ function App() {
   function addTask(name) {
     const newTasks = [
       ...tasks,
-      { id: nanoid(), name: name, completed: false, archived: false },
+      { id: nanoid(), name, completed: false, archived: false },
     ];
     setTasks(newTasks);
   }
 
   function randomTasks() {
-    const randomTask = Math.floor(Math.random() * tasks.length);
+    const randomIndex = Math.floor(Math.random() * tasks.length);
+    const randomTask = tasks[randomIndex];
     setRandom(randomTask);
+  }
+
+  function ErrorFallback() {
+    return (
+      <div role="alert">
+        <p>Something went wrong: Please try again!</p>
+      </div>
+    );
   }
 
   return (
@@ -107,7 +118,7 @@ function App() {
         <Route
           path="/random"
           element={
-            <>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
               <button
                 onClick={() => {
                   randomTasks();
@@ -116,21 +127,13 @@ function App() {
                 Shuffle
               </button>
               <section>
-                {tasks ? (
-                  <Task
-                    key={tasks[random].id}
-                    name={tasks[random].name}
-                    completed={tasks[random].completed}
-                    setComplete={() => setComplete(tasks[random].id)}
-                    archived={tasks[random].archived}
-                    deleteTask={() => deleteTask(tasks[random].id)}
-                    archiveTask={() => archiveTask(tasks[random].id)}
-                  />
-                ) : (
-                  "Please shuffle a random task!"
-                )}
+                <TaskBlank
+                  key={random.id}
+                  name={random.name}
+                  completed={random.completed}
+                />
               </section>
-            </>
+            </ErrorBoundary>
           }
         />
       </Routes>

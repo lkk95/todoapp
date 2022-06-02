@@ -42,8 +42,8 @@ const TaskContainer = styled.section`
 const Button = styled.button`
   height: 2.5em;
   padding: 0.5em;
-  background-color: black;
+  background-color: #5d6058;
   color: white;
-  border: solid 0px black;
+  border: solid 0px #5d6058;
   border-radius: 0.3em;
 `;
