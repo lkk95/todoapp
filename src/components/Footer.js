@@ -12,16 +12,20 @@ export default function Footer() {
 }
 
 const FooterUl = styled.div`
-  height: 5em;
+  height: 4em;
   width: 80%;
   position: fixed;
   bottom: 0;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  background-color: #5d6058;
+  font-weight: bold;
+  font-size: 1.15em;
 `;
 
 const FooterLi = styled(NavLink)`
   list-style: none;
   text-decoration: none;
-  color: black;
+  color: white;
 `;

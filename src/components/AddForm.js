@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
-export default function Form({ addTask }) {
+export default function AddForm({ addTask }) {
   const [name, setName] = useState("");
 
   const handleSubmit = (event) => {
@@ -9,7 +10,7 @@ export default function Form({ addTask }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <FormContainer onSubmit={handleSubmit}>
       <label htmlFor="input-name">Add task:</label>
       <input
         id="input-name"
@@ -18,6 +19,12 @@ export default function Form({ addTask }) {
         onChange={(event) => setName(event.target.value)}
       />
       <input type="submit" value="Submit" />
-    </form>
+    </FormContainer>
   );
 }
+
+const FormContainer = styled.form`
+  display: flex;
+  gap: 2em;
+  font-size: 1.15em;
+`;
