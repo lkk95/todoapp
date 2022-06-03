@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export default function Form({ addTask }) {
+export default function AddForm({ addTask }) {
   const [name, setName] = useState("");
 
   const handleSubmit = (event) => {

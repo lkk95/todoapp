@@ -17,5 +17,7 @@ const TaskContainer = styled.section`
   align-items: center;
   margin: 2em 0 2em 0;
   gap: 2em;
-  background-color: ${(props) => (props.completed ? "#c65d52" : "#a2bba3")};
+  background-color: ${(props) => (props.completed ? "#7EA172" : "#FC7A57")};
+  border: solid 0 ${(props) => (props.completed ? "#7EA172" : "#FC7A57")};
+  border-radius: 0.4em;
 `;
