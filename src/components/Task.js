@@ -12,7 +12,6 @@ export default function Task({
   return (
     <TaskContainer completed={completed}>
       <p>{name}</p>
-      <p>{created}</p>
       <Buttons archived={archived}>
         {completed ? (
           <Button onClick={setComplete}>complete</Button>
