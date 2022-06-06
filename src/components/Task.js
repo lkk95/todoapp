@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 export default function Task({
   name,
@@ -8,24 +9,57 @@ export default function Task({
   setComplete,
   deleteTask,
   archiveTask,
+  editTask,
 }) {
+  const [editing, setEditing] = useState(false);
+
+  const [newname, setNewName] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    editTask(newname);
+    setEditing(!editing);
+  };
+
   return (
-    <TaskContainer completed={completed}>
-      <p>{name}</p>
-      <p>{created}</p>
-      <Buttons archived={archived}>
-        {completed ? (
-          <Button onClick={setComplete}>complete</Button>
-        ) : (
-          <Button onClick={setComplete}>uncomplete</Button>
-        )}
-        {completed ? (
-          <Button onClick={deleteTask}>delete</Button>
-        ) : (
-          <Button onClick={archiveTask}>archive</Button>
-        )}
-      </Buttons>
-    </TaskContainer>
+    <section>
+      {editing ? (
+        <TaskContainer completed={completed}>
+          <form onSubmit={handleSubmit}>
+            <input
+              id="input-newname"
+              type="text"
+              value={newname}
+              onChange={(event) => setNewName(event.target.value)}
+            />
+            <input type="submit" value="Save" />
+            <Button onClick={() => setEditing(!editing)}>cancel</Button>
+          </form>
+        </TaskContainer>
+      ) : (
+        <TaskContainer completed={completed}>
+          <p>{name}</p>
+          <p>{created}</p>
+          <Buttons archived={archived}>
+            {completed ? (
+              <Button onClick={setComplete}>uncomplete</Button>
+            ) : (
+              <Button onClick={setComplete}>complete</Button>
+            )}
+            {completed ? (
+              ""
+            ) : (
+              <Button onClick={() => setEditing(!editing)}>edit</Button>
+            )}
+            {completed ? (
+              <Button onClick={deleteTask}>delete</Button>
+            ) : (
+              <Button onClick={archiveTask}>archive</Button>
+            )}
+          </Buttons>
+        </TaskContainer>
+      )}
+    </section>
   );
 }
 
