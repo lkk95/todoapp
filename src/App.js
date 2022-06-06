@@ -157,13 +157,13 @@ function App() {
           path="/random"
           element={
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              <button
+              <Button
                 onClick={() => {
                   randomTasks();
                 }}
               >
                 Shuffle
-              </button>
+              </Button>
               <section>
                 {Object.keys(random).length === 0 ? (
                   "Please use the shuffle button to get your random ToDo!"
@@ -200,4 +200,13 @@ const AppContainer = styled.main`
   justify-content: center;
   align-items: center;
   margin: 10em 0 10em 0;
+`;
+
+const Button = styled.button`
+  height: 2.5em;
+  padding: 0.5em;
+  background-color: #3f4b3b;
+  color: white;
+  border: solid 0px #3f4b3b;
+  border-radius: 0.3em;
 `;

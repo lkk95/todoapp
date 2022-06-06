@@ -33,30 +33,30 @@ export default function Task({
               value={newname}
               onChange={(event) => setNewName(event.target.value)}
             />
-            <input type="submit" value="Save" />
-            <Button onClick={() => setEditing(!editing)}>cancel</Button>
+            <SaveButton type="submit" value="Save" />
+            <Button onClick={() => setEditing(!editing)}>Cancel</Button>
           </form>
         </TaskContainer>
       ) : (
         <TaskContainer completed={completed}>
           <p>{name}</p>
-          <Date>created: {created}</Date>
-          <Date>edited: {edited}</Date>
+          <Date>Created: {created}</Date>
+          <Date>Edited: {edited}</Date>
           <Buttons archived={archived}>
             {completed ? (
-              <Button onClick={setComplete}>uncomplete</Button>
+              <Button onClick={setComplete}>Uncomplete</Button>
             ) : (
-              <Button onClick={setComplete}>complete</Button>
+              <Button onClick={setComplete}>Complete</Button>
             )}
             {completed ? (
               ""
             ) : (
-              <Button onClick={() => setEditing(!editing)}>edit</Button>
+              <Button onClick={() => setEditing(!editing)}>Edit</Button>
             )}
             {completed ? (
-              <Button onClick={archiveTask}>archive</Button>
+              <Button onClick={archiveTask}>Archive</Button>
             ) : (
-              <Button onClick={deleteTask}>delete</Button>
+              <Button onClick={deleteTask}>Delete</Button>
             )}
           </Buttons>
         </TaskContainer>
@@ -94,4 +94,13 @@ const Date = styled.p`
 
 const Buttons = styled.section`
   display: ${(props) => (props.archived ? "none" : "flex")};
+`;
+
+const SaveButton = styled.input`
+  height: 2.5em;
+  padding: 0.5em;
+  background-color: #3f4b3b;
+  color: white;
+  border: solid 0px #3f4b3b;
+  border-radius: 0.3em;
 `;

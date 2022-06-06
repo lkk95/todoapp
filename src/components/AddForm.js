@@ -19,7 +19,7 @@ export default function AddForm({ addTask }) {
         value={name}
         onChange={(event) => setName(event.target.value)}
       />
-      <input type="submit" value="Submit" />
+      <SubmitButton type="submit" value="Submit" />
     </FormContainer>
   );
 }
@@ -28,4 +28,13 @@ const FormContainer = styled.form`
   display: flex;
   gap: 2em;
   font-size: 1.15em;
+`;
+
+const SubmitButton = styled.input`
+  height: 2.5em;
+  padding: 0.5em;
+  background-color: #3f4b3b;
+  color: white;
+  border: solid 0px #3f4b3b;
+  border-radius: 0.3em;
 `;
