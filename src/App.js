@@ -54,6 +54,17 @@ function App() {
     setTasks(newTasks);
   }
 
+  function editTask(id, newname) {
+    const editedTasks = tasks.map((task) => {
+      if (id === task.id) {
+        return { ...task, name: newname };
+      } else {
+        return task;
+      }
+    });
+    setTasks(editedTasks);
+  }
+
   function randomTasks() {
     const filteredTasks = tasks.filter((task) => !task.archived);
     const randomIndex = Math.floor(Math.random() * filteredTasks.length);
@@ -91,6 +102,7 @@ function App() {
                         archived={task.archived}
                         deleteTask={() => deleteTask(task.id)}
                         archiveTask={() => archiveTask(task.id)}
+                        editTask={(newname) => editTask(task.id, newname)}
                       />
                     );
                   })}
@@ -142,6 +154,7 @@ function App() {
                   archived={random.archived}
                   deleteTask={() => deleteTask(random.id)}
                   archiveTask={() => archiveTask(random.id)}
+                  editTask={(newname) => editTask(random.id, newname)}
                 />
               </section>
             </ErrorBoundary>
