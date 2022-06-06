@@ -208,9 +208,9 @@ const Button = styled.button`
   height: 2.5em;
   width: 6em;
   padding: 0.5em;
-  background-color: #3f4b3b;
+  background-color: #2e2d4d;
   color: white;
-  border: solid 0px #3f4b3b;
+  border: solid 0px #2e2d4d;
   border-radius: 0.3em;
 `;
 

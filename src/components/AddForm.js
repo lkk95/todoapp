@@ -39,7 +39,7 @@ const FormContainer = styled.form`
 const SubmitButton = styled.input`
   height: 2.5em;
   padding: 0.5em;
-  background-color: #3f4b3b;
+  background-color: #2e2d4d;
   color: white;
   border: solid 0px #3f4b3b;
   border-radius: 0.3em;

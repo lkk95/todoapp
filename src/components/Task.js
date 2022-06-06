@@ -78,18 +78,18 @@ const TaskContainer = styled.section`
   margin: 2em 0 2em 0;
   padding: 1.5em;
   gap: 2em;
-  background-color: ${(props) => (props.completed ? "#7EA172" : "#FC7A57")};
+  background-color: ${(props) => (props.completed ? "#8CB369" : "#FF7E6B")};
   border: solid 0 ${(props) => (props.completed ? "#7EA172" : "#FC7A57")};
   border-radius: 0.4em;
 `;
 
 const Button = styled.button`
   height: 2.5em;
-  width: 6em;
+  width: 7em;
   padding: 0.5em;
-  background-color: #3f4b3b;
+  background-color: #2e2d4d;
   color: white;
-  border: solid 0px #3f4b3b;
+  border: solid 0px #2e2d4d;
   border-radius: 0.3em;
 `;
 
@@ -106,9 +106,9 @@ const SaveButton = styled.input`
   height: 2.5em;
   width: 6em;
   padding: 0.5em;
-  background-color: #3f4b3b;
+  background-color: #2e2d4d;
   color: white;
-  border: solid 0px #3f4b3b;
+  border: solid 0px #2e2d4d;
   border-radius: 0.3em;
 `;
 
