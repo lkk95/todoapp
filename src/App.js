@@ -66,8 +66,9 @@ function App() {
   }
 
   function randomTasks() {
-    const randomIndex = Math.floor(Math.random() * tasks.length);
-    const randomTask = tasks[randomIndex];
+    const filteredTasks = tasks.filter((task) => !task.archived);
+    const randomIndex = Math.floor(Math.random() * filteredTasks.length);
+    const randomTask = filteredTasks[randomIndex];
     setRandom(randomTask);
   }
 
@@ -96,7 +97,6 @@ function App() {
                       <Task
                         key={task.id}
                         name={task.name}
-                        created={task.created}
                         completed={task.completed}
                         setComplete={() => setComplete(task.id)}
                         archived={task.archived}
@@ -122,7 +122,6 @@ function App() {
                       <Task
                         key={task.id}
                         name={task.name}
-                        created={task.created}
                         completed={task.completed}
                         setComplete={() => setComplete(task.id)}
                         archived={task.archived}
@@ -150,7 +149,6 @@ function App() {
                 <Task
                   key={random.id}
                   name={random.name}
-                  created={random.created}
                   completed={random.completed}
                   setComplete={() => setComplete(random.id)}
                   archived={random.archived}
