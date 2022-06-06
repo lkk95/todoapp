@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("current-tasks", []);
-  const [random, setRandom] = useState(0);
+  const [random, setRandom] = useState({});
 
   function setComplete(id) {
     const completedTasks = tasks.map((random) => {
@@ -165,18 +165,22 @@ function App() {
                 Shuffle
               </button>
               <section>
-                <Task
-                  key={random.id}
-                  name={random.name}
-                  created={random.created}
-                  edited={random.edited}
-                  completed={random.completed}
-                  setComplete={() => setComplete(random.id)}
-                  archived={random.archived}
-                  deleteTask={() => deleteTask(random.id)}
-                  archiveTask={() => archiveTask(random.id)}
-                  editTask={(newname) => editTask(random.id, newname)}
-                />
+                {Object.keys(random).length === 0 ? (
+                  "Please use the shuffle button to get your random ToDo!"
+                ) : (
+                  <Task
+                    key={random.id}
+                    name={random.name}
+                    created={random.created}
+                    edited={random.edited}
+                    completed={random.completed}
+                    setComplete={() => setComplete(random.id)}
+                    archived={random.archived}
+                    deleteTask={() => deleteTask(random.id)}
+                    archiveTask={() => archiveTask(random.id)}
+                    editTask={(newname) => editTask(random.id, newname)}
+                  />
+                )}
               </section>
             </ErrorBoundary>
           }
