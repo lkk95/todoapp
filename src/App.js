@@ -166,7 +166,9 @@ function App() {
               </Button>
               <section>
                 {Object.keys(random).length === 0 ? (
-                  "Please use the shuffle button to get your random ToDo!"
+                  <Alert>
+                    Please use the shuffle button to get your random ToDo!
+                  </Alert>
                 ) : (
                   <Task
                     key={random.id}
@@ -204,9 +206,14 @@ const AppContainer = styled.main`
 
 const Button = styled.button`
   height: 2.5em;
+  width: 6em;
   padding: 0.5em;
   background-color: #3f4b3b;
   color: white;
   border: solid 0px #3f4b3b;
   border-radius: 0.3em;
+`;
+
+const Alert = styled.p`
+  margin-top: 2em;
 `;

@@ -26,7 +26,7 @@ export default function Task({
     <section>
       {editing ? (
         <TaskContainer completed={completed}>
-          <form onSubmit={handleSubmit}>
+          <FormContainer onSubmit={handleSubmit}>
             <input
               id="input-newname"
               type="text"
@@ -35,13 +35,17 @@ export default function Task({
             />
             <SaveButton type="submit" value="Save" />
             <Button onClick={() => setEditing(!editing)}>Cancel</Button>
-          </form>
+          </FormContainer>
         </TaskContainer>
       ) : (
         <TaskContainer completed={completed}>
-          <p>{name}</p>
-          <Date>Created: {created}</Date>
-          <Date>Edited: {edited}</Date>
+          <TaskInfo>
+            <p>{name}</p>
+            <section>
+              <Date>Created: {created}</Date>
+              <Date>Edited: {edited}</Date>
+            </section>
+          </TaskInfo>
           <Buttons archived={archived}>
             {completed ? (
               <Button onClick={setComplete}>Uncomplete</Button>
@@ -69,7 +73,7 @@ const TaskContainer = styled.section`
   height: 6em;
   width: 35em;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin: 2em 0 2em 0;
   padding: 1.5em;
@@ -81,6 +85,7 @@ const TaskContainer = styled.section`
 
 const Button = styled.button`
   height: 2.5em;
+  width: 6em;
   padding: 0.5em;
   background-color: #3f4b3b;
   color: white;
@@ -89,18 +94,40 @@ const Button = styled.button`
 `;
 
 const Date = styled.p`
-  font-size: 0.5rem;
+  font-size: 0.6rem;
 `;
 
 const Buttons = styled.section`
   display: ${(props) => (props.archived ? "none" : "flex")};
+  gap: 1em;
 `;
 
 const SaveButton = styled.input`
   height: 2.5em;
+  width: 6em;
   padding: 0.5em;
   background-color: #3f4b3b;
   color: white;
   border: solid 0px #3f4b3b;
   border-radius: 0.3em;
+`;
+
+const TaskInfo = styled.section`
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0em;
+  p {
+    margin: 0.5em;
+  }
+  section {
+    display: flex;
+    gap: 0.5em;
+  }
+`;
+
+const FormContainer = styled.form`
+  display: flex;
+  gap: 2em;
+  font-size: 1.15em;
 `;

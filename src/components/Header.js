@@ -15,4 +15,5 @@ const HeaderContainer = styled.header`
   top: 0;
   font-weight: bold;
   border-bottom: solid 0.1em black;
+  font-family: "Righteous", cursive;
 `;

@@ -26,8 +26,14 @@ export default function AddForm({ addTask }) {
 
 const FormContainer = styled.form`
   display: flex;
+  align-items: center;
   gap: 2em;
   font-size: 1.15em;
+  margin-bottom: 2em;
+  input {
+    width: 16em;
+    height: 2.5em;
+  }
 `;
 
 const SubmitButton = styled.input`
