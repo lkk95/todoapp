@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
   const [tasks, setTasks] = useLocalStorage("current-tasks", []);
-  const [random, setRandom] = useState(0);
+  const [random, setRandom] = useState({});
 
   function setComplete(id) {
     const completedTasks = tasks.map((random) => {
@@ -42,6 +42,13 @@ function App() {
   }
 
   function addTask(name) {
+    let currentDate = new Date();
+    const createdate =
+      currentDate.getDate() +
+      "." +
+      (currentDate.getMonth() + 1) +
+      "." +
+      currentDate.getFullYear();
     const newTasks = [
       ...tasks,
       {
@@ -49,15 +56,23 @@ function App() {
         name,
         completed: false,
         archived: false,
+        created: createdate,
       },
     ];
     setTasks(newTasks);
   }
 
   function editTask(id, newname) {
+    let currentDate = new Date();
+    const editdate =
+      currentDate.getDate() +
+      "." +
+      (currentDate.getMonth() + 1) +
+      "." +
+      currentDate.getFullYear();
     const editedTasks = tasks.map((task) => {
       if (id === task.id) {
-        return { ...task, name: newname };
+        return { ...task, name: newname, edited: editdate };
       } else {
         return task;
       }
@@ -97,6 +112,8 @@ function App() {
                       <Task
                         key={task.id}
                         name={task.name}
+                        created={task.created}
+                        edited={task.edited}
                         completed={task.completed}
                         setComplete={() => setComplete(task.id)}
                         archived={task.archived}
@@ -122,6 +139,8 @@ function App() {
                       <Task
                         key={task.id}
                         name={task.name}
+                        created={task.created}
+                        edited={task.edited}
                         completed={task.completed}
                         setComplete={() => setComplete(task.id)}
                         archived={task.archived}
@@ -146,16 +165,22 @@ function App() {
                 Shuffle
               </button>
               <section>
-                <Task
-                  key={random.id}
-                  name={random.name}
-                  completed={random.completed}
-                  setComplete={() => setComplete(random.id)}
-                  archived={random.archived}
-                  deleteTask={() => deleteTask(random.id)}
-                  archiveTask={() => archiveTask(random.id)}
-                  editTask={(newname) => editTask(random.id, newname)}
-                />
+                {Object.keys(random).length === 0 ? (
+                  "Please use the shuffle button to get your random ToDo!"
+                ) : (
+                  <Task
+                    key={random.id}
+                    name={random.name}
+                    created={random.created}
+                    edited={random.edited}
+                    completed={random.completed}
+                    setComplete={() => setComplete(random.id)}
+                    archived={random.archived}
+                    deleteTask={() => deleteTask(random.id)}
+                    archiveTask={() => archiveTask(random.id)}
+                    editTask={(newname) => editTask(random.id, newname)}
+                  />
+                )}
               </section>
             </ErrorBoundary>
           }

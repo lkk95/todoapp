@@ -5,6 +5,7 @@ export default function Task({
   name,
   completed,
   created,
+  edited,
   archived,
   setComplete,
   deleteTask,
@@ -39,7 +40,8 @@ export default function Task({
       ) : (
         <TaskContainer completed={completed}>
           <p>{name}</p>
-          <p>{created}</p>
+          <Date>created: {created}</Date>
+          <Date>edited: {edited}</Date>
           <Buttons archived={archived}>
             {completed ? (
               <Button onClick={setComplete}>uncomplete</Button>
@@ -65,7 +67,7 @@ export default function Task({
 
 const TaskContainer = styled.section`
   height: 6em;
-  width: 25em;
+  width: 35em;
   display: flex;
   justify-content: center;
   align-items: center;
