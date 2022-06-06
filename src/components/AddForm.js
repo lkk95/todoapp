@@ -7,6 +7,7 @@ export default function AddForm({ addTask }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     addTask(name);
+    setName("");
   };
 
   return (
