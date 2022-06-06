@@ -42,6 +42,13 @@ function App() {
   }
 
   function addTask(name) {
+    let currentDate = new Date();
+    const createdate =
+      currentDate.getDate() +
+      "." +
+      (currentDate.getMonth() + 1) +
+      "." +
+      currentDate.getFullYear();
     const newTasks = [
       ...tasks,
       {
@@ -49,15 +56,23 @@ function App() {
         name,
         completed: false,
         archived: false,
+        created: createdate,
       },
     ];
     setTasks(newTasks);
   }
 
   function editTask(id, newname) {
+    let currentDate = new Date();
+    const editdate =
+      currentDate.getDate() +
+      "." +
+      (currentDate.getMonth() + 1) +
+      "." +
+      currentDate.getFullYear();
     const editedTasks = tasks.map((task) => {
       if (id === task.id) {
-        return { ...task, name: newname };
+        return { ...task, name: newname, edited: editdate };
       } else {
         return task;
       }
@@ -97,6 +112,8 @@ function App() {
                       <Task
                         key={task.id}
                         name={task.name}
+                        created={task.created}
+                        edited={task.edited}
                         completed={task.completed}
                         setComplete={() => setComplete(task.id)}
                         archived={task.archived}
@@ -122,6 +139,8 @@ function App() {
                       <Task
                         key={task.id}
                         name={task.name}
+                        created={task.created}
+                        edited={task.edited}
                         completed={task.completed}
                         setComplete={() => setComplete(task.id)}
                         archived={task.archived}
@@ -149,6 +168,8 @@ function App() {
                 <Task
                   key={random.id}
                   name={random.name}
+                  created={random.created}
+                  edited={random.edited}
                   completed={random.completed}
                   setComplete={() => setComplete(random.id)}
                   archived={random.archived}
