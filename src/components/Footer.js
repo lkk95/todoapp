@@ -19,7 +19,7 @@ const FooterUl = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #5d6058;
+  background-color: #6b818c;
   font-weight: bold;
   font-size: 1.15em;
 `;
