@@ -26,11 +26,11 @@ function App() {
   }
 
   function archiveTask(id) {
-    const archivedTasks = tasks.map((random) => {
-      if (random.id === id) {
-        return { ...random, archived: !random.archived };
+    const archivedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, archived: !task.archived };
       } else {
-        return random;
+        return task;
       }
     });
     setTasks(archivedTasks);

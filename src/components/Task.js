@@ -54,9 +54,9 @@ export default function Task({
               <Button onClick={() => setEditing(!editing)}>edit</Button>
             )}
             {completed ? (
-              <Button onClick={deleteTask}>delete</Button>
-            ) : (
               <Button onClick={archiveTask}>archive</Button>
+            ) : (
+              <Button onClick={deleteTask}>delete</Button>
             )}
           </Buttons>
         </TaskContainer>
