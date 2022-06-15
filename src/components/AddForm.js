@@ -43,4 +43,5 @@ const SubmitButton = styled.input`
   color: white;
   border: solid 0px #3f4b3b;
   border-radius: 0.3em;
+  cursor: pointer;
 `;

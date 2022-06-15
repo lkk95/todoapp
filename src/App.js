@@ -212,6 +212,7 @@ const Button = styled.button`
   color: white;
   border: solid 0px #2e2d4d;
   border-radius: 0.3em;
+  cursor: pointer;
 `;
 
 const Alert = styled.p`
